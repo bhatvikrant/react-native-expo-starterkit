@@ -1,15 +1,31 @@
 import React from "react";
+import { View } from "react-native";
+
+// REACT NAVIGATION
+import { NavigationContainer } from "@react-navigation/native";
+
+// UI KITTEN
 import * as eva from "@eva-design/eva";
-import { ApplicationProvider, Layout, Text } from "@ui-kitten/components";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
 
-const HomeScreen = () => (
-	<Layout style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-		<Text category="h6">HOME</Text>
-	</Layout>
-);
+// NAVIGATORS
+import HomeNavigator from "./src/navigators/HomeNavigator";
 
-export default () => (
-	<ApplicationProvider {...eva} theme={eva.light}>
-		<HomeScreen />
-	</ApplicationProvider>
-);
+// SCREENS
+
+const App = () => {
+	const [theme, setTheme] = React.useState<"light" | "dark">("light");
+	const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
+
+	return (
+		<NavigationContainer>
+			<ApplicationProvider {...eva} theme={eva[theme]}>
+				<IconRegistry icons={EvaIconsPack} />
+				<HomeNavigator />
+			</ApplicationProvider>
+		</NavigationContainer>
+	);
+};
+
+export default App;
